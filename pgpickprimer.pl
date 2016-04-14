@@ -1,4 +1,4 @@
-my $buildno = '2.0.2016.02.06';
+my $buildno = '2.0.2016.04.14';
 #
 # pgpickprimer
 # 
@@ -6,7 +6,7 @@ my $buildno = '2.0.2016.02.06';
 # http://www.fifthdimension.jp/products/phylogears/ .
 # To know script details, see above URL.
 # 
-# Copyright (C) 2008-2015  Akifumi S. Tanabe
+# Copyright (C) 2008-2016  Akifumi S. Tanabe
 # 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -33,7 +33,7 @@ Official web site of this script is
 http://www.fifthdimension.jp/products/phylogears/ .
 To know script details, see above URL.
 
-Copyright (C) 2008-2015  Akifumi S. Tanabe
+Copyright (C) 2008-2016  Akifumi S. Tanabe
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -369,6 +369,7 @@ if ($format ne 'FASTA' && $format ne 'PHYLIP') {
 
 # make consensus sequence
 my @consensusseq;
+my %gappos;
 {
 	my %state;
 	$state{'A'} = 1;
@@ -639,6 +640,9 @@ my @consensusseq;
 		}
 		else {
 			$consensusseq[$i] = '?';
+		}
+		if ($consensusseq[$i] eq '-') {
+			$gappos{$i} = 1;
 		}
 	}
 }

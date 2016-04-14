@@ -1,4 +1,3 @@
-#!/usr/bin/perl
 my $buildno = '2.0.2016.02.06';
 #
 # pgdegenseq
@@ -293,111 +292,251 @@ my @consensusseq;
 	$state{'D'} = 3;
 	$state{'B'} = 3;
 	$state{'N'} = 4;
+	$state{'?'} = 5;
 	my $tempconsensus = $ntax * $consensus / 100;
 	for (my $i = 0; $i < $nchar; $i ++) {
 		my %num;
 		for (my $j = 0; $j < $ntax; $j ++) {
 			if ($seqs[$j][$i] eq 'A') {
 				$num{'A'} ++;
-				$num{'M'} ++;
-				$num{'R'} ++;
-				$num{'W'} ++;
-				$num{'V'} ++;
-				$num{'H'} ++;
-				$num{'D'} ++;
-				$num{'N'} ++;
 			}
 			elsif ($seqs[$j][$i] eq 'C') {
 				$num{'C'} ++;
-				$num{'M'} ++;
-				$num{'S'} ++;
-				$num{'Y'} ++;
-				$num{'V'} ++;
-				$num{'H'} ++;
-				$num{'B'} ++;
-				$num{'N'} ++;
 			}
 			elsif ($seqs[$j][$i] eq 'G') {
 				$num{'G'} ++;
-				$num{'R'} ++;
-				$num{'S'} ++;
-				$num{'K'} ++;
-				$num{'V'} ++;
-				$num{'D'} ++;
-				$num{'B'} ++;
-				$num{'N'} ++;
 			}
 			elsif ($seqs[$j][$i] eq 'T' || $seqs[$j][$i] eq 'U') {
 				$num{'T'} ++;
-				$num{'W'} ++;
-				$num{'Y'} ++;
-				$num{'K'} ++;
-				$num{'H'} ++;
-				$num{'D'} ++;
-				$num{'B'} ++;
-				$num{'N'} ++;
 			}
 			elsif ($seqs[$j][$i] eq 'M') {
+				$num{'A'} ++;
+				$num{'C'} ++;
 				$num{'M'} ++;
-				$num{'V'} ++;
-				$num{'H'} ++;
-				$num{'N'} ++;
 			}
 			elsif ($seqs[$j][$i] eq 'R') {
+				$num{'A'} ++;
+				$num{'G'} ++;
 				$num{'R'} ++;
-				$num{'V'} ++;
-				$num{'D'} ++;
-				$num{'N'} ++;
 			}
 			elsif ($seqs[$j][$i] eq 'W') {
+				$num{'A'} ++;
+				$num{'T'} ++;
 				$num{'W'} ++;
-				$num{'H'} ++;
-				$num{'D'} ++;
-				$num{'N'} ++;
 			}
 			elsif ($seqs[$j][$i] eq 'S') {
+				$num{'C'} ++;
+				$num{'G'} ++;
 				$num{'S'} ++;
-				$num{'V'} ++;
-				$num{'B'} ++;
-				$num{'N'} ++;
 			}
 			elsif ($seqs[$j][$i] eq 'Y') {
+				$num{'C'} ++;
+				$num{'T'} ++;
 				$num{'Y'} ++;
-				$num{'H'} ++;
-				$num{'B'} ++;
-				$num{'N'} ++;
 			}
 			elsif ($seqs[$j][$i] eq 'K') {
+				$num{'G'} ++;
+				$num{'T'} ++;
 				$num{'K'} ++;
-				$num{'D'} ++;
-				$num{'B'} ++;
-				$num{'N'} ++;
 			}
 			elsif ($seqs[$j][$i] eq 'V') {
+				$num{'A'} ++;
+				$num{'C'} ++;
+				$num{'G'} ++;
+				$num{'M'} ++;
+				$num{'R'} ++;
+				$num{'S'} ++;
 				$num{'V'} ++;
-				$num{'N'} ++;
 			}
 			elsif ($seqs[$j][$i] eq 'H') {
+				$num{'A'} ++;
+				$num{'C'} ++;
+				$num{'T'} ++;
+				$num{'M'} ++;
+				$num{'W'} ++;
+				$num{'Y'} ++;
 				$num{'H'} ++;
-				$num{'N'} ++;
 			}
 			elsif ($seqs[$j][$i] eq 'D') {
+				$num{'A'} ++;
+				$num{'G'} ++;
+				$num{'T'} ++;
+				$num{'R'} ++;
+				$num{'W'} ++;
+				$num{'K'} ++;
 				$num{'D'} ++;
-				$num{'N'} ++;
 			}
 			elsif ($seqs[$j][$i] eq 'B') {
+				$num{'C'} ++;
+				$num{'G'} ++;
+				$num{'T'} ++;
+				$num{'S'} ++;
+				$num{'Y'} ++;
+				$num{'K'} ++;
+				$num{'B'} ++;
+			}
+			elsif ($seqs[$j][$i] eq 'N') {
+				$num{'A'} ++;
+				$num{'C'} ++;
+				$num{'G'} ++;
+				$num{'T'} ++;
+				$num{'M'} ++;
+				$num{'R'} ++;
+				$num{'W'} ++;
+				$num{'S'} ++;
+				$num{'Y'} ++;
+				$num{'K'} ++;
+				$num{'V'} ++;
+				$num{'H'} ++;
+				$num{'D'} ++;
 				$num{'B'} ++;
 				$num{'N'} ++;
 			}
-			elsif ($seqs[$j][$i] eq 'N') {
+			elsif ($seqs[$j][$i] eq '?') {
+				$num{'A'} ++;
+				$num{'C'} ++;
+				$num{'G'} ++;
+				$num{'T'} ++;
+				$num{'M'} ++;
+				$num{'R'} ++;
+				$num{'W'} ++;
+				$num{'S'} ++;
+				$num{'Y'} ++;
+				$num{'K'} ++;
+				$num{'V'} ++;
+				$num{'H'} ++;
+				$num{'D'} ++;
+				$num{'B'} ++;
 				$num{'N'} ++;
+				$num{'-'} ++;
+				$num{'?'} ++;
 			}
 			elsif ($seqs[$j][$i] eq '-') {
 				$num{'-'} ++;
 			}
 		}
-		my @temp1 = sort({$num{$a} <=> $num{$b} || $state{$a} <=> $state{$b}} ('A', 'C', 'G', 'T', '-', 'M', 'R', 'W', 'S', 'Y', 'K', 'V', 'H', 'D', 'B', 'N'));
-		while (@temp1 && $num{$temp1[0]} < $tempconsensus) {
+		my %sub;
+		for (my $j = 0; $j < $ntax; $j ++) {
+			if ($seqs[$j][$i] eq 'A') {
+				$sub{'A'} ++;
+				$sub{'M'} ++;
+				$sub{'R'} ++;
+				$sub{'W'} ++;
+				$sub{'V'} ++;
+				$sub{'H'} ++;
+				$sub{'D'} ++;
+				$sub{'N'} ++;
+				$sub{'?'} ++;
+			}
+			elsif ($seqs[$j][$i] eq 'C') {
+				$sub{'C'} ++;
+				$sub{'M'} ++;
+				$sub{'S'} ++;
+				$sub{'Y'} ++;
+				$sub{'V'} ++;
+				$sub{'H'} ++;
+				$sub{'B'} ++;
+				$sub{'N'} ++;
+				$sub{'?'} ++;
+			}
+			elsif ($seqs[$j][$i] eq 'G') {
+				$sub{'G'} ++;
+				$sub{'R'} ++;
+				$sub{'S'} ++;
+				$sub{'K'} ++;
+				$sub{'V'} ++;
+				$sub{'D'} ++;
+				$sub{'B'} ++;
+				$sub{'N'} ++;
+				$sub{'?'} ++;
+			}
+			elsif ($seqs[$j][$i] eq 'T' || $seqs[$j][$i] eq 'U') {
+				$sub{'T'} ++;
+				$sub{'W'} ++;
+				$sub{'Y'} ++;
+				$sub{'K'} ++;
+				$sub{'H'} ++;
+				$sub{'D'} ++;
+				$sub{'B'} ++;
+				$sub{'N'} ++;
+				$sub{'?'} ++;
+			}
+			elsif ($seqs[$j][$i] eq 'M') {
+				$sub{'M'} ++;
+				$sub{'V'} ++;
+				$sub{'H'} ++;
+				$sub{'N'} ++;
+				$sub{'?'} ++;
+			}
+			elsif ($seqs[$j][$i] eq 'R') {
+				$sub{'R'} ++;
+				$sub{'V'} ++;
+				$sub{'D'} ++;
+				$sub{'N'} ++;
+				$sub{'?'} ++;
+			}
+			elsif ($seqs[$j][$i] eq 'W') {
+				$sub{'W'} ++;
+				$sub{'H'} ++;
+				$sub{'D'} ++;
+				$sub{'N'} ++;
+				$sub{'?'} ++;
+			}
+			elsif ($seqs[$j][$i] eq 'S') {
+				$sub{'S'} ++;
+				$sub{'V'} ++;
+				$sub{'B'} ++;
+				$sub{'N'} ++;
+				$sub{'?'} ++;
+			}
+			elsif ($seqs[$j][$i] eq 'Y') {
+				$sub{'Y'} ++;
+				$sub{'H'} ++;
+				$sub{'B'} ++;
+				$sub{'N'} ++;
+				$sub{'?'} ++;
+			}
+			elsif ($seqs[$j][$i] eq 'K') {
+				$sub{'K'} ++;
+				$sub{'D'} ++;
+				$sub{'B'} ++;
+				$sub{'N'} ++;
+				$sub{'?'} ++;
+			}
+			elsif ($seqs[$j][$i] eq 'V') {
+				$sub{'V'} ++;
+				$sub{'N'} ++;
+				$sub{'?'} ++;
+			}
+			elsif ($seqs[$j][$i] eq 'H') {
+				$sub{'H'} ++;
+				$sub{'N'} ++;
+				$sub{'?'} ++;
+			}
+			elsif ($seqs[$j][$i] eq 'D') {
+				$sub{'D'} ++;
+				$sub{'N'} ++;
+				$sub{'?'} ++;
+			}
+			elsif ($seqs[$j][$i] eq 'B') {
+				$sub{'B'} ++;
+				$sub{'N'} ++;
+				$sub{'?'} ++;
+			}
+			elsif ($seqs[$j][$i] eq 'N') {
+				$sub{'N'} ++;
+				$sub{'?'} ++;
+			}
+			elsif ($seqs[$j][$i] eq '?') {
+				$sub{'?'} ++;
+			}
+			elsif ($seqs[$j][$i] eq '-') {
+				$sub{'-'} ++;
+				$sub{'?'} ++;
+			}
+		}
+		my @temp1 = sort({$num{$b} <=> $num{$a} || $sub{$b} <=> $sub{$a} || $state{$a} <=> $state{$b}} ('A', 'C', 'G', 'T', '-', 'M', 'R', 'W', 'S', 'Y', 'K', 'V', 'H', 'D', 'B', 'N', '?'));
+		while (@temp1 && $num{$temp1[0]} < $tempconsensus && $sub{$temp1[0]} < $tempconsensus) {
 			shift(@temp1);
 		}
 		if (@temp1) {

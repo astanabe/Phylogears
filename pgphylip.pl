@@ -1,4 +1,3 @@
-#!/usr/bin/perl
 my $buildno = '2.0.2016.02.06';
 #
 # pgphylip

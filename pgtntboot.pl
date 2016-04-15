@@ -1,4 +1,4 @@
-my $buildno = '2.0.2016.04.14';
+my $buildno = '2.0.x';
 #
 # pgtntboot
 # 

@@ -7,7 +7,7 @@ pgretrieveseq $buildno
 =======================================================================
 
 Official web site of this script is
-http://www.fifthdimension.jp/products/phylogears/ .
+https://www.fifthdimension.jp/products/phylogears/ .
 To know script details, see above URL.
 
 Copyright (C) 2008-2016  Akifumi S. Tanabe
@@ -133,7 +133,7 @@ my $ua = LWP::UserAgent->new;
 $ua->timeout($timeout);
 $ua->agent('pgretrieveseq/prerelease');
 $ua->env_proxy;
-my $baseurl = "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=$database&retmode=text&rettype=$outformat&id=";
+my $baseurl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=$database&retmode=text&rettype=$outformat&id=";
 my $numid = 0;
 my @ids;
 while (<$inputhandle>) {

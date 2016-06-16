@@ -3,7 +3,7 @@ my $buildno = '2.0.x';
 # pgtestcomposition
 # 
 # Official web site of this script is
-# http://www.fifthdimension.jp/products/phylogears/ .
+# https://www.fifthdimension.jp/products/phylogears/ .
 # To know script details, see above URL.
 # 
 # Copyright (C) 2008-2016  Akifumi S. Tanabe
@@ -33,7 +33,7 @@ pgtestcomposition $buildno
 =======================================================================
 
 Official web site of this script is
-http://www.fifthdimension.jp/products/phylogears/ .
+https://www.fifthdimension.jp/products/phylogears/ .
 To know script details, see above URL.
 
 Copyright (C) 2008-2016  Akifumi S. Tanabe

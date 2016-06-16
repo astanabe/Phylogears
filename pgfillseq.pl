@@ -3,7 +3,7 @@ my $buildno = '2.0.x';
 # pgfillseq
 # 
 # Official web site of this script is
-# http://www.fifthdimension.jp/products/phylogears/ .
+# https://www.fifthdimension.jp/products/phylogears/ .
 # To know script details, see above URL.
 # 
 # Copyright (C) 2008-2016  Akifumi S. Tanabe
@@ -56,7 +56,7 @@ pgfillseq $buildno
 =======================================================================
 
 Official web site of this script is
-http://www.fifthdimension.jp/products/phylogears/ .
+https://www.fifthdimension.jp/products/phylogears/ .
 To know script details, see above URL.
 
 Copyright (C) 2008-2016  Akifumi S. Tanabe

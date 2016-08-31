@@ -1,8 +1,8 @@
 PREFIX ?= /usr/local
 BINDIR ?= $(PREFIX)/bin
 PERL := $(filter /%,$(shell /bin/sh -c 'type perl'))
-VERSION := 2.0.2016.04.15
-PROGRAM := pgaligncodon pgcalcotudist pgcomptree pgconcatgap pgconcatseq pgconvchronogram pgconvseq pgconvswl pgconvtree pgdegenseq pgdivseq pgelimdupseq pgelimduptree pgemboss pgencodegap pgfillseq pgjointree pgmbburninparam pgpaup pgpaupbesttree pgpauplscores2lset pgphylip pgpickprimer pgpoy pgrecodeseq pgresampleseq pgretrieveseq pgspliceseq pgsplicetree pgsplittree pgstanstrand pgstripcolumn pgsumtree pgtestcomposition pgtf pgtfboot pgtfjoinlog pgtfratchet pgtnt pgtntboot pgtranseq pgtrimal
+VERSION := 2.0.2016.08.31
+PROGRAM := pgaligncodon pgcalcotudist pgcomptree pgconcatgap pgconcatseq pgconvchronogram pgconvseq pgconvswl pgconvtree pgdegenseq pgdivseq pgelimdupseq pgelimduptree pgemboss pgencodegap pgfillseq pgjointree pgmcmctree pgmbburninparam pgpaup pgpaupbesttree pgpauplscores2lset pgphylip pgpickprimer pgpoy pgrecodeseq pgresampleseq pgretrieveseq pgspliceseq pgsplicetree pgsplittree pgstanstrand pgstripcolumn pgsumtree pgtestcomposition pgtf pgtfboot pgtfjoinlog pgtfratchet pgtnt pgtntboot pgtranseq pgtrimal
 
 all: $(PROGRAM)
 
@@ -71,6 +71,10 @@ pgfillseq: pgfillseq.pl
 	$(PERL) -npe "s/buildno = '2\.0\.x'/buildno = '$(VERSION)'/" $< >> $@
 
 pgjointree: pgjointree.pl
+	echo '#!'$(PERL) > $@
+	$(PERL) -npe "s/buildno = '2\.0\.x'/buildno = '$(VERSION)'/" $< >> $@
+
+pgmcmctree: pgmcmctree.pl
 	echo '#!'$(PERL) > $@
 	$(PERL) -npe "s/buildno = '2\.0\.x'/buildno = '$(VERSION)'/" $< >> $@
 

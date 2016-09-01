@@ -428,7 +428,7 @@ sub runPrior {
       outfile = usedata0
 
         ndata = $ndata
-      usedata = 2    * 0: no data; 1:seq like; 2:normal approximation
+      usedata = 0    * 0: no data; 1:seq like; 2:normal approximation
         clock = $model    * 1: global clock; 2: independent rates; 3: correlated rates
       RootAge = '<15'  * constraint on root age, used if no fossil for root.
 

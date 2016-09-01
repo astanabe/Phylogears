@@ -68,6 +68,7 @@ if ($outputfile !~ /^stdout$/i && -e $outputfile) {
 }
 my $mode = 'ALL';
 my $supportvalue = 'PERCENT';
+my $precision = 0;
 my $treefile;
 my $threshold = 0;
 my $ignoreweight = 0;
@@ -229,7 +230,13 @@ else {
 			my @temphypotheses = (@majorhypotheses, @minorhypotheses);
 			for (my $i = 0; $i < scalar(@temphypotheses); $i ++) {
 				my $hypothesis = $temphypotheses[$i];
-				my $support = sprintf("%.1f", $support{$hypothesis});
+				my $support;
+				if ($precision) {
+					$support = sprintf("%.*f", $precision, $support{$hypothesis});
+				}
+				else {
+					$support = sprintf("%d", $support{$hypothesis});
+				}
 				$hypothesis =~ s/\),/)$support,/;
 				push(@outtreenames, $temphypothesisnames[$i]);
 				push(@outtrees, $hypothesis);
@@ -268,7 +275,13 @@ else {
 					@larger = @group0;
 					@smaller = @group1;
 				}
-				my $support = sprintf("%.1f", $support{$majorhypothesis});
+				my $support;
+				if ($precision) {
+					$support = sprintf("%.*f", $precision, $support{$hypothesis});
+				}
+				else {
+					$support = sprintf("%d", $support{$hypothesis});
+				}
 				if (!$consensustree) {
 					$consensustree = '(' . join(',', @larger) . ',(' . join(',', @smaller) . ')' . $support . ')';
 				}
@@ -352,7 +365,13 @@ else {
 			my @temphypotheses = (@majorhypotheses, @minorhypotheses);
 			for (my $i = 0; $i < scalar(@temphypotheses); $i ++) {
 				my $hypothesis = $temphypotheses[$i];
-				my $support = sprintf("%.1f", $support{$hypothesis});
+				my $support;
+				if ($precision) {
+					$support = sprintf("%.*f", $precision, $support{$hypothesis});
+				}
+				else {
+					$support = sprintf("%d", $support{$hypothesis});
+				}
 				$hypothesis =~ s/\),/)$support,/;
 				push(@outtreenames, $temphypothesisnames[$i]);
 				push(@outtrees, $hypothesis);
@@ -404,7 +423,13 @@ else {
 			while ($tree =~ /<(\d+)>.+<\/\1>/) {
 				my $j = $1;
 				if (defined($tempsupport[$j])) {
-					my $support = sprintf("%.1f", $tempsupport[$j]);
+					my $support;
+					if ($precision) {
+						$support = sprintf("%.*f", $precision, $tempsupport[$j]);
+					}
+					else {
+						$support = sprintf("%d", $tempsupport[$j]);
+					}
 					$tree =~ s/<$j>(.+)<\/$j>/($1)$support/;
 				}
 				else {
@@ -661,6 +686,9 @@ exploration or all incompatible hypotheses exploration. (default: 0)
 
 -s, --supportvalue=PERCENT|NUMBER
   Specify the output format for support values. (default: PERCENT)
+
+-p, --precision=INTEGER
+  Specify the number of decimal places. (default: 0)
 
 Acceptable input file formats
 =============================

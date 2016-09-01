@@ -150,7 +150,7 @@ if ($treefile && $mode ne 'MAP' && $mode ne 'ALLi' && $mode ne 'MAJi') {
 }
 if ($supportvalue eq 'RATE' && $precision < 2) {
 	$precision = 2;
-	print(STDERR "The number of decimal places was changed to 2.");
+	print(STDERR "The number of decimal places was changed to 2.\n");
 }
 
 my @outtreenames;

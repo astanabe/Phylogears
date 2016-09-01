@@ -106,6 +106,9 @@ for (my $i = 0; $i < scalar(@ARGV) - 2; $i ++) {
 		if ($1 =~ /^PERCENT$/i) {
 			$supportvalue = 'PERCENT';
 		}
+		elsif ($1 =~ /^RATE$/i) {
+			$supportvalue = 'RATE';
+		}
 		elsif ($1 =~ /^NUMBER$/i) {
 			$supportvalue = 'NUMBER';
 		}
@@ -144,6 +147,10 @@ if (!$treefile && ($mode eq 'MAP' || $mode eq 'ALLi' || $mode eq 'MAJi')) {
 }
 if ($treefile && $mode ne 'MAP' && $mode ne 'ALLi' && $mode ne 'MAJi') {
 	&errorMessage(__LINE__, "Mode is $mode, but tree file is given.");
+}
+if ($supportvalue eq 'RATE' && $precision < 2) {
+	$precision = 2;
+	print(STDERR "The number of decimal places was changed to 2.");
 }
 
 my @outtreenames;
@@ -189,6 +196,12 @@ else {
 			$support{$hypothesis} = ($support{$hypothesis} / $total) * 100;
 		}
 		$total = 100;
+	}
+	elsif ($supportvalue eq 'RATE') {
+		foreach my $hypothesis (keys(%support)) {
+			$support{$hypothesis} = $support{$hypothesis} / $total;
+		}
+		$total = 1;
 	}
 	else {
 		$threshold = $total * $threshold;
@@ -687,7 +700,7 @@ hypotheses exploration.
   Specify the lower threshold of support value as percent for all hypotheses
 exploration or all incompatible hypotheses exploration. (default: 0)
 
--s, --supportvalue=PERCENT|NUMBER
+-s, --supportvalue=PERCENT|RATE|NUMBER
   Specify the output format for support values. (default: PERCENT)
 
 -p, --precision=INTEGER

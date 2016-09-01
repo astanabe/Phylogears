@@ -436,7 +436,7 @@ else {
 					$tree =~ s/<$j>(.+)<\/$j>/($1)$support/;
 				}
 				else {
-					$tree =~ s/<$j>(.+)<\/$j>/($1)/;
+					$tree =~ s/<$j>(.+)<\/$j>/($1)0/;
 				}
 			}
 			push(@outtreenames, $maptreenames[$i]);

@@ -121,6 +121,9 @@ for (my $i = 0; $i < scalar(@ARGV) - 2; $i ++) {
 			&errorMessage(__LINE__, "Specified tree file \"$1\" does not exist.");
 		}
 	}
+	elsif ($ARGV[$i] =~ /^-+(?:precision|p)=(\d+)$/i) {
+		$precision = $1;
+	}
 	elsif ($ARGV[$i] =~ /^-+threshold=(\d+)$/i) {
 		$threshold = $1;
 	}

@@ -277,10 +277,10 @@ else {
 				}
 				my $support;
 				if ($precision) {
-					$support = sprintf("%.*f", $precision, $support{$hypothesis});
+					$support = sprintf("%.*f", $precision, $support{$majorhypothesis});
 				}
 				else {
-					$support = sprintf("%d", $support{$hypothesis});
+					$support = sprintf("%d", $support{$majorhypothesis});
 				}
 				if (!$consensustree) {
 					$consensustree = '(' . join(',', @larger) . ',(' . join(',', @smaller) . ')' . $support . ')';

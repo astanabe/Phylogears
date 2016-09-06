@@ -1,7 +1,7 @@
 PREFIX ?= /usr/local
 BINDIR ?= $(PREFIX)/bin
 PERL := $(filter /%,$(shell /bin/sh -c 'type perl'))
-VERSION := 2.0.2016.09.01
+VERSION := 2.0.2016.09.06
 PROGRAM := pgaligncodon pgcalcotudist pgcomptree pgconcatgap pgconcatseq pgconvchronogram pgconvseq pgconvswl pgconvtree pgdegenseq pgdivseq pgelimdupseq pgelimduptree pgemboss pgencodegap pgfillseq pgjointree pgmcmctree pgmbburninparam pgpaup pgpaupbesttree pgpauplscores2lset pgphylip pgpickprimer pgpoy pgrecodeseq pgresampleseq pgretrieveseq pgspliceseq pgsplicetree pgsplittree pgstanstrand pgstripcolumn pgsumtree pgtestcomposition pgtf pgtfboot pgtfjoinlog pgtfratchet pgtnt pgtntboot pgtranseq pgtrimal
 
 all: $(PROGRAM)

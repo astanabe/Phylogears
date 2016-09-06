@@ -214,7 +214,7 @@ else {
 		my @minorhypotheses;
 		my $minorhypothesisno = 1;
 		foreach my $hypothesis (sort({$support{$b} <=> $support{$a}} keys(%support))) {
-			if ($mode eq 'ALL' && $support{$hypothesis} < $threshold) {
+			if ($support{$hypothesis} < $threshold) {
 				last;
 			}
 			my $majorornot = 1;
@@ -336,7 +336,7 @@ else {
 			my @minorhypotheses;
 			my $minorhypothesisno = 1;
 			foreach my $hypothesis (@hypotheses) {
-				if ($mode eq 'ALLi' && $support{$hypothesis} < $threshold) {
+				if ($support{$hypothesis} < $threshold) {
 					last;
 				}
 				my $incompatibleornot = 0;
@@ -432,7 +432,13 @@ else {
 				if (scalar(@followers) != 1 && scalar(@others) != 1) {
 					my $followers = join(',', sort(@followers));
 					my $others = join(',', sort(@others));
-					$tempsupport[$cladeno] = $support{'(' . join('),(', sort($followers, $others)) . ')'};
+					my $temphypothesis = '(' . join('),(', sort($followers, $others)) . ')';
+					if (exists($support{$temphypothesis})) {
+						$tempsupport[$cladeno] = $support{$temphypothesis};
+					}
+					else {
+						$tempsupport[$cladeno] = 0;
+					}
 				}
 				$cladeno ++;
 			}
@@ -449,7 +455,7 @@ else {
 					$tree =~ s/<$j>(.+)<\/$j>/($1)$support/;
 				}
 				else {
-					$tree =~ s/<$j>(.+)<\/$j>/($1)0/;
+					$tree =~ s/<$j>(.+)<\/$j>/($1)/;
 				}
 			}
 			push(@outtreenames, $maptreenames[$i]);
@@ -697,8 +703,8 @@ hypotheses exploration.
 (default: none)
 
 --threshold=INTEGER (0-100)
-  Specify the lower threshold of support value as percent for all hypotheses
-exploration or all incompatible hypotheses exploration. (default: 0)
+  Specify the lower threshold of support value as percent for hypotheses
+exploration, incompatible hypotheses exploration or consensus. (default: 0)
 
 -s, --supportvalue=PERCENT|RATE|NUMBER
   Specify the output format for support values. (default: PERCENT)

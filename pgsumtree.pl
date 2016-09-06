@@ -139,9 +139,6 @@ for (my $i = 0; $i < scalar(@ARGV) - 2; $i ++) {
 }
 
 # validate options
-if ($threshold && $mode ne 'ALLi' && $mode ne 'ALL') {
-	&errorMessage(__LINE__, "Threshold is specified, but mode is not ALLi or ALL.");
-}
 if (!$treefile && ($mode eq 'MAP' || $mode eq 'ALLi' || $mode eq 'MAJi')) {
 	&errorMessage(__LINE__, "Mode is $mode, but tree file is not given.");
 }

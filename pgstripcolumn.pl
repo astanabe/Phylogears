@@ -6,7 +6,7 @@ my $buildno = '2.0.x';
 # https://www.fifthdimension.jp/products/phylogears/ .
 # To know script details, see above URL.
 # 
-# Copyright (C) 2008-2016  Akifumi S. Tanabe
+# Copyright (C) 2008-2018  Akifumi S. Tanabe
 # 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -36,7 +36,7 @@ Official web site of this script is
 https://www.fifthdimension.jp/products/phylogears/ .
 To know script details, see above URL.
 
-Copyright (C) 2008-2016  Akifumi S. Tanabe
+Copyright (C) 2008-2018  Akifumi S. Tanabe
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

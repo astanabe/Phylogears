@@ -6,7 +6,7 @@ my $buildno = '2.0.x';
 # https://www.fifthdimension.jp/products/phylogears/ .
 # To know script details, see above URL.
 # 
-# Copyright (C) 2008-2016  Akifumi S. Tanabe
+# Copyright (C) 2008-2018  Akifumi S. Tanabe
 # 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -33,7 +33,7 @@ Official web site of this script is
 https://www.fifthdimension.jp/products/phylogears/ .
 To know script details, see above URL.
 
-Copyright (C) 2008-2016  Akifumi S. Tanabe
+Copyright (C) 2008-2018  Akifumi S. Tanabe
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -67,6 +67,7 @@ unless (-e $inputfile) {
 my $maxpick = 25;
 my $consensus = 95;
 my $perfectmatch = 10;
+my $minnsupporter = 1;
 my $sizerange = '300-1000';
 my $mintm = 45;
 my $maxtm = 60;
@@ -76,6 +77,7 @@ my %thirdcodonpos;
 my @taxa;
 my @seqs;
 my $outputinput = 1;
+my $ignoregap = 1;
 
 # get command line options
 for (my $i = 0; $i < scalar(@ARGV) - 2; $i ++) {
@@ -101,6 +103,15 @@ for (my $i = 0; $i < scalar(@ARGV) - 2; $i ++) {
 	elsif ($ARGV[$i] =~ /^-+perfectmatch=(\d+)$/i) {
 		if ($1 > 0 && $1 <= 100) {
 			$perfectmatch = $1;
+		}
+		else {
+			&errorMessage(__LINE__, "\"$ARGV[$i]\" is invalid option.");
+		}
+	}
+	# minimum number of supporter sequences
+	elsif ($ARGV[$i] =~ /^-+min(?:imum)?n(?:um)?support(?:er)?=(\d+)$/i) {
+		if ($1 > 0) {
+			$minnsupporter = $1;
 		}
 		else {
 			&errorMessage(__LINE__, "\"$ARGV[$i]\" is invalid option.");
@@ -183,6 +194,16 @@ for (my $i = 0; $i < scalar(@ARGV) - 2; $i ++) {
 		}
 		else {
 			$outputinput = 0;
+		}
+	}
+	# ignore gap or not
+	elsif ($ARGV[$i] =~ /^-+ignoregap=(enable|disable|yes|no|true|false|E|D|Y|N|T|F)$/i) {
+		my $temp = $1;
+		if ($temp =~ /^(?:E|Y|T)/i) {
+			$ignoregap = 1;
+		}
+		else {
+			$ignoregap = 0;
 		}
 	}
 	else {
@@ -389,7 +410,6 @@ my %gappos;
 	$state{'B'} = 3;
 	$state{'N'} = 4;
 	$state{'?'} = 5;
-	my $tempconsensus = $ntax * $consensus / 100;
 	for (my $i = 0; $i < $nchar; $i ++) {
 		my %num;
 		for (my $j = 0; $j < $ntax; $j ++) {
@@ -631,8 +651,23 @@ my %gappos;
 				$sub{'?'} ++;
 			}
 		}
+		my $tempconsensus;
+		my $tempntax = 0;
+		if ($ignoregap) {
+			$tempntax = $ntax - $num{'-'};
+			$tempconsensus = $tempntax * $consensus / 100;
+			$sub{'?'} -= $num{'-'};
+			$sub{'-'} = 0;
+			$num{'-'} = 0;
+		}
+		else {
+			$tempconsensus = $ntax * $consensus / 100;
+		}
 		my @temp1 = sort({$num{$b} <=> $num{$a} || $sub{$b} <=> $sub{$a} || $state{$a} <=> $state{$b}} ('A', 'C', 'G', 'T', '-', 'M', 'R', 'W', 'S', 'Y', 'K', 'V', 'H', 'D', 'B', 'N', '?'));
 		while (@temp1 && $num{$temp1[0]} < $tempconsensus && $sub{$temp1[0]} < $tempconsensus) {
+			shift(@temp1);
+		}
+		while (@temp1 && $num{$temp1[0]} < $minnsupporter && $sub{$temp1[0]} < $minnsupporter) {
 			shift(@temp1);
 		}
 		if (@temp1) {

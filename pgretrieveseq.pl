@@ -10,7 +10,7 @@ Official web site of this script is
 https://www.fifthdimension.jp/products/phylogears/ .
 To know script details, see above URL.
 
-Copyright (C) 2008-2016  Akifumi S. Tanabe
+Copyright (C) 2008-2018  Akifumi S. Tanabe
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -129,44 +129,23 @@ unless (open($inputhandle, "< $inputfile")) {
 }
 
 print(STDERR "Downloading sequences...");
+
 my $ua = LWP::UserAgent->new;
 $ua->timeout($timeout);
 $ua->agent('pgretrieveseq/prerelease');
 $ua->env_proxy;
 my $baseurl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=$database&retmode=text&rettype=$outformat&id=";
+
 my $numid = 0;
 my @ids;
 while (<$inputhandle>) {
 	s/\r?\n?$//;
-	if (/^ *(\d+) *$/) {
+	if (/^ *(\S+) *$/) {
 		push(@ids, $1);
 		$numid ++;
 	}
 	if (scalar(@ids) >= 100) {
-		my $req = HTTP::Request->new(POST => $baseurl . join(',', @ids));
-		my $res = $ua->request($req);
-		if ($res->is_success) {
-			my $outputhandle;
-			if ($outputfile =~ /^stdout$/i) {
-				unless (open($outputhandle, '>-')) {
-					&errorMessage(__LINE__, "Cannot write STDOUT.");
-				}
-			}
-			else {
-				unless (open($outputhandle, ">> $outputfile")) {
-					&errorMessage(__LINE__, "Cannot write \"$outputfile\".");
-				}
-			}
-			foreach (split(/\n/,$res->content)) {
-				unless (/^ *\r?\n?$/) {
-					print($outputhandle "$_\n");
-				}
-			}
-			close($outputhandle);
-		}
-		else {
-			&errorMessage(__LINE__, "Cannot search at NCBI.\nError status: " . $res->status_line . "\n");
-		}
+		&retrieveSequence(@ids);
 		print(STDERR $numid . '...');
 		if ($numid % 10000 == 0) {
 			print(STDERR "\nResting NCBI server...");
@@ -183,6 +162,14 @@ while (<$inputhandle>) {
 	}
 }
 if (@ids) {
+	&retrieveSequence(@ids);
+	print(STDERR $numid . '...');
+	undef(@ids);
+}
+print(STDERR "done.\n\n");
+
+sub retrieveSequence {
+	my @ids = @_;
 	my $req = HTTP::Request->new(POST => $baseurl . join(',', @ids));
 	my $res = $ua->request($req);
 	if ($res->is_success) {
@@ -205,12 +192,11 @@ if (@ids) {
 		close($outputhandle);
 	}
 	else {
-		&errorMessage(__LINE__, "Cannot search at NCBI.\nError status: " . $res->status_line . "\n");
+		print(STDERR "\nError. Retrying...");
+		sleep(5);
+		&retrieveSequence(@ids);
 	}
-	print(STDERR $numid . '...');
-	undef(@ids);
 }
-print(STDERR "done.\n\n");
 
 # error message
 sub errorMessage {
@@ -241,6 +227,7 @@ Command line options
 Input file format
 =================
 GenBank ID list (one per a line)
+SeqID list (one per a line)
 _END
 	exit;
 }

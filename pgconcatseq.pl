@@ -307,13 +307,19 @@ foreach my $inputfile (@inputfiles) {
 	}
 	foreach my $taxon (@taxa) {
 		if ($criterion =~ /^name$/i) {
-			while (!$seqs{$taxon}{$inputfile} || $maxlength > length($seqs{$taxon}{$inputfile})) {
-				$seqs{$taxon}{$inputfile} .= '?';
+			my $lengthdiff = $maxlength - length($seqs{$taxon}{$inputfile});
+			if ($lengthdiff > 0) {
+				my $add = sprintf("%*s", $lengthdiff, ' ');
+				$add =~ tr/ /?/;
+				$seqs{$taxon}{$inputfile} .= $add;
 			}
 		}
 		else {
-			while (!$seqs{$taxa{$taxon}}{$inputfile} || $maxlength > length($seqs{$taxa{$taxon}}{$inputfile})) {
-				$seqs{$taxa{$taxon}}{$inputfile} .= '?';
+			my $lengthdiff = $maxlength - length($seqs{$taxa{$taxon}}{$inputfile});
+			if ($lengthdiff > 0) {
+				my $add = sprintf("%*s", $lengthdiff, ' ');
+				$add =~ tr/ /?/;
+				$seqs{$taxa{$taxon}}{$inputfile} .= $add;
 			}
 		}
 	}

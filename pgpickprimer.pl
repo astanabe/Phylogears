@@ -100,7 +100,7 @@ for (my $i = 0; $i < scalar(@ARGV) - 2; $i ++) {
 		}
 	}
 	# maximum number of degenerate character
-	elsif ($ARGV[$i] =~ /^-+perfectmatch=(\d+)$/i) {
+	elsif ($ARGV[$i] =~ /^-+perfectmatch=(\d+(?:\.\d+)?)$/i) {
 		if ($1 > 0 && $1 <= 100) {
 			$perfectmatch = $1;
 		}

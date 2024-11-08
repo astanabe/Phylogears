@@ -1,0 +1,33 @@
+for f in pg*.pl
+do
+	perl -wc $f || exit $?
+done
+
+t=`TZ=JST-9 date +%Y.%m.%d`
+perl -i.bak -npe "s/^VERSION := 2\.0\.\d\d\d\d\.\d\d\.\d\d/VERSION := 2.0.$t/" Makefile
+
+mv phylogears2-?.?.????.??.??.zip oldfiles/
+rm -rf phylogears2-?.?.????.??.??
+mkdir -p phylogears2-2.0.$t
+
+cp pg*.pl phylogears2-2.0.$t/
+cp LICENSE phylogears2-2.0.$t/
+cp Makefile phylogears2-2.0.$t/
+cp README.md phylogears2-2.0.$t/
+
+zip -r -9 -y -X phylogears2-2.0.$t.zip phylogears2-2.0.$t
+
+mv phylogears2-?.?.????.??.??_for_Windows.zip oldfiles/
+rm -rf phylogears2-?.?.????.??.??_for_Windows
+mkdir -p phylogears2-2.0.$t\_for_Windows
+
+for f in `ls pg*.pl | egrep -o '^[^.]+'`
+do
+	cat header.txt > phylogears2-2.0.$t\_for_Windows/$f.bat
+	perl -npe "s/\r?\n/\r\n/;s/buildno = '2\.0\.x'/buildno = '2.0.$t'/" $f.pl >> phylogears2-2.0.$t\_for_Windows/$f.bat
+	cat footer.txt >> phylogears2-2.0.$t\_for_Windows/$f.bat
+done
+perl -npe "s/\r?\n/\r\n/;" LICENSE > phylogears2-2.0.$t\_for_Windows/LICENSE
+perl -npe "s/\r?\n/\r\n/;" README.md > phylogears2-2.0.$t\_for_Windows/README.md
+
+zip -r -9 -y -X phylogears2-2.0.$t\_for_Windows.zip phylogears2-2.0.$t\_for_Windows

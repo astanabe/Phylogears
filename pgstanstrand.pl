@@ -132,10 +132,10 @@ while (<INFILE>) {
 			print(STDERR "The $nseq-th sequence\nFscore: $fscore\nRscore: $rscore\n");
 			# delete temporary file
 			unlink("$inputfile.$nseq.fasta");
-			undef($seqname);
-			undef($sequence);
 		}
 		$nseq ++;
+		undef($seqname);
+		undef($sequence);
 	}
 	if ($line =~ /^>/) {
 		$seqname = $line;
